@@ -17,21 +17,21 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ApiMemberController extends AbstractController
 {
     #[Route('/api/members', name: 'api_members', methods: ['GET'])]
-    public function list(MemberRepository $repo, SerializerInterface $serializer): JsonResponse
+    public function listMembers(MemberRepository $repo, SerializerInterface $serializer): JsonResponse
     {
         $listMembers = $serializer->serialize($repo->findAll(), 'json');
         return new JsonResponse($listMembers, 200, [], true);
     }
 
     #[Route('/api/member/{id}', name:'api_member_show', methods: ['GET'])]
-    public function show(Member $member, SerializerInterface $serializer)
+    public function showMember(Member $member, SerializerInterface $serializer)
     {
         $data = $serializer->serialize($member, 'json');
         Return new JsonResponse($data, Response::HTTP_OK, [], true);
     }
 
     #[Route('/api/member/{id}', name:'api_member_update', methods: ['PUT'])]
-    public function update(Member $member, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
+    public function updateMember(Member $member, Request $request, SerializerInterface $serializer, EntityManagerInterface $manager, ValidatorInterface $validator)
     {
         $data = $request->getContent();
         $data = $serializer->deserialize($data, Member::class, 'json', ['object_to_populate'=>$member]);
@@ -47,7 +47,7 @@ class ApiMemberController extends AbstractController
         $manager->flush();
 
 
-        Return new JsonResponse("modification réalisée avec succés", Response::HTTP_OK,[], true);
+        Return new JsonResponse("modification réalisée avec succès", Response::HTTP_OK,[], true);
     }
 
     #[Route('/api/member', name: 'api_member_create', methods: ['POST'])]
@@ -70,11 +70,12 @@ class ApiMemberController extends AbstractController
     }
 
     #[Route('/api/member/{id}', name: 'api_member_delete', methods:['DELETE'])]
-    public function delete(Member $member, EntityManagerInterface $manager)
+    public function deleteMember(Member $member, EntityManagerInterface $manager)
     {
         $manager->remove($member);
         $manager->flush();
 
         return new JsonResponse('Membre Supprimé avec succès', RESPONSE::HTTP_OK, [], true);
     }
+
 }

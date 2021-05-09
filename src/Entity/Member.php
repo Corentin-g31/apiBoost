@@ -61,6 +61,9 @@ class Member
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Regex(
+     * pattern = "#^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$#",
+     * message ="Le numéro {{ value }} n'est pas valide.")
      */
     private $phone;
 

@@ -3,8 +3,6 @@ security:
         App\Entity\Administration:
             algorithm: auto
 
-
-
     providers:
         app_user_provider: 
             entity:
@@ -38,8 +36,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # - { path: ^/api/members, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+
 
 
         
